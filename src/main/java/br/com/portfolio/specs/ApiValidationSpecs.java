@@ -143,7 +143,7 @@ public class ApiValidationSpecs {
     public static ResponseSpecification validateEmailAlreadyExist() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(SC_BAD_REQUEST)
-                .expectBody("message", equalTo("Este email já está sendo usadote"))
+                .expectBody("message", equalTo("Este email já está sendo usado"))
                 .build();
     }
 
