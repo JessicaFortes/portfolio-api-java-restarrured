@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UserResponse",
+  "type": "object",
+  "required": ["nome", "email", "password", "administrador", "_id"],
+  "additionalProperties": false,
+  "properties": {
+    "nome": { "type": "string", "minLength": 1 },
+    "email": { "type": "string", "minLength": 1 },
+    "password": { "type": "string", "minLength": 1 },
+    "administrador": { "type": "string", "enum": ["true", "false"] },
+    "_id": { "type": "string", "minLength": 1 }
+  }
+}

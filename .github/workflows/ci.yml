@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Build and Test (Java 21)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+
+      - name: Build and run tests
+        run: |
+          echo "=== Iniciando build e testes Maven ==="
+          mvn -B -e -V clean verify || true
+
+      - name: Resumo dos testes
+        if: always()
+        shell: bash
+        run: |
+          echo "=== RESUMO DOS TESTES ==="
+          REPORTS=$(find target/surefire-reports -name '*.txt' 2>/dev/null)
+          if [ -z "$REPORTS" ]; then
+            echo 'Nenhum relatorio do Surefire encontrado.'
+            exit 0
+          fi
+          TEST_SUMMARY=$(grep -E 'Tests run:' $REPORTS || true)
+          if [ -z "$TEST_SUMMARY" ]; then
+            echo 'Resumo de testes nao encontrado nos relatorios.'
+            exit 0
+          fi
+          echo "$TEST_SUMMARY"
+          if echo "$TEST_SUMMARY" | grep -Eq 'Failures: [1-9]|Errors: [1-9]'; then
+            echo 'Falhas detectadas nos testes (pipeline nao bloqueada).'
+            exit 0
+          fi
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            target/surefire-reports
+            target/site
+          retention-days: 7

@@ -1,0 +1,23 @@
+{
+  "consulta" : {
+    "nome" : "Automacao Testes Consulta",
+    "email" : "portfolio-api-jess@qa.com.br",
+    "password" : "teste",
+    "administrador" : "false",
+    "_id" : "8jH6R32derWSAD7k"
+  },
+  "alteracao" : {
+    "nome" : "Automacao Testes Alteracao",
+    "email" : "portfolio-api-jess2@qa.com.br",
+    "password" : "teste",
+    "administrador" : "true",
+    "_id" : "2O1wJE47krvXu61r"
+  },
+  "remover" : {
+    "nome" : "Automacao Testes Delete",
+    "email" : "portfolio-api-jess3@qa.com.br",
+    "password" : "teste",
+    "administrador" : "true",
+    "_id" : "mORpHwiJkXw5mi7L"
+  }
+}
